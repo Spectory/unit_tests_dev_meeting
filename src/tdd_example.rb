@@ -1,7 +1,8 @@
 module Utils
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   def self.send_email(email_msg)
-    # assume this sends the actual email
+    # assume this sends the actual email, and return true when done.
+    puts 'this should never print while you run your tests'
     return true
   end
 end

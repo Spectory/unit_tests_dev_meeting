@@ -22,6 +22,11 @@ describe 'InviteSender' do
   # ignore this block for now, we talk about it later...
   before do
     InviteSender::EMAIL_COUNTER.clear
+    mock_util_send_email(true)
+  end
+
+  def mock_util_send_email(response)
+    allow(Utils).to receive(:send_email).and_return(response)
   end
 
   # according to the US, we are going to handle email address as inputs.
@@ -73,7 +78,9 @@ describe 'InviteSender' do
     # we need to make sure each email only gets 3  send attempts.
     # so we need to come up with a way to count sent attempts for each email address.
     # mmm... how should it behave? when ever we send an email, its counter should increment.
-    # but notice! we don't want to count invites from other tests! therefore we need to rest this counter before each test (now the block at line 8 make scene, ha!)
+    # but notice! we don't want to count invites from other tests! therefore we need to rest this counter before each test
+    # we also need to mock Utils.send_email method.
+    # now the block at line 8 make scene, ha!
     describe 'attempts_counter' do
       email = 'some@email.com'
       it 'should hash email address to an int' do
@@ -110,11 +117,3 @@ describe 'InviteSender' do
     3.times { expect(InviteSender.send_invite_to email).to be false }
   end
 end
-
-# Great success!!!
-# a few things to talk about:
-# - the actual code is much shorter than the unit tests.
-# - it took me about 1.5 hour to do it all, including comments and all.
-# - reading the tests code really describes the InviteSender behavior. thats great documentation for the future
-# - compare it to your non TDD code it you wrote it, which is better? more robust? more flexible?
-#
