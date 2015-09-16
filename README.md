@@ -183,7 +183,7 @@ and modify the code
   end
 ```
 
-AHH! we called the Util.send_email method! this sent real emails to some@email.com.
+Lets run the tests, they all pass but... AHH! we called the Util.send_email method! this sent real emails to some@email.com.
 running production code at unit tests is a big NO NO!
 
 we should stub Util.send_email method, and mock its expected return value
@@ -218,7 +218,7 @@ almost done, lets wrap it all up from top to bottom.
   end
 ```
 
-if those last test pass, we did a fine job. and... Great success!!!
+if those last test pass, we did a fine job. Great success!!!
 
 ---
 
