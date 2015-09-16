@@ -35,11 +35,15 @@ lets make sure we can do differentiate between bad/good emails
   describe 'valid_email?' do
     valid_emails = %w(some@email.com some@email.org some@email.co.il)
     invalid_emails = %w(someemail.com @email.org some@.co.il)
-    it 'when emails are valid' do
-      valid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be true }
+    describe 'when emails are valid' do
+      it 'should return true' do
+        valid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be true }
+      end
     end
-    it 'when emails are invalid' do
-      invalid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be false }
+    describe 'when emails are invalid' do
+      it 'should return false' do
+        invalid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be false }
+      end
     end
   end
 ```
@@ -92,7 +96,7 @@ and the code
 ok, now we know how a email_msg looks like, lets deal with the token uniqueness
 
 ```ruby
-  it 'each email_msg should have a uniqe token' do
+  it 'should have a uniqe token' do
     emails = (1..100).map { |n| "email_#{n}@domain.com" }
     emails_msgs = emails.map { |e| InviteSender.send(:email_msg, e) }
     tokens = emails_msgs.map { |msg| msg[:token] }
@@ -153,12 +157,16 @@ Awesome! now lets make sure we allow only 3 attempts.
 ```ruby
   describe 'attempts limit' do
     email = 'some@email.com'
-    it 'when less than 3 attempts' do
-      3.times { expect(InviteSender.send_invite_to email).to be true }
+    describe 'when less than 3 attempts' do
+      it 'should return true' do
+        3.times { expect(InviteSender.send_invite_to email).to be true }
+      end
     end
-    it 'when more than 3 attempts' do
-      3.times { expect(InviteSender.send_invite_to email).to be true }
-      expect(InviteSender.send_invite_to email).to be false
+    describe 'when more than 3 attempts' do
+      it 'should return false' do
+        3.times { expect(InviteSender.send_invite_to email).to be true }
+        expect(InviteSender.send_invite_to email).to be false
+      end
     end
   end
 ```
