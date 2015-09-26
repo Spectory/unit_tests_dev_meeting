@@ -22,7 +22,7 @@ angular.module('app').controller('mainCtl', function ($scope, ajaxService) {
   }
 
   $scope.init = function () {
-    ajaxService('GET', 'server_url/arrays/3').then(processArrFromServer);
+    processArrFromServer();
   };
 ```
 
