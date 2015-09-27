@@ -65,14 +65,15 @@ all tests pass, excellent!
 
 ---
 
-the US also states each email should have a unique token. lets make sure we can to that. First lets define how a email msg looks like. well, its a pair of email address & a token.
+the US also states each email should have a unique token. lets make sure we can to that. First lets define how we pair email addresses & tokens.
 
 ```ruby
+describe 'email_token_pair' do
   email = 'some@email.com'
-  describe 'email_msg structure' do
+  describe 'email_token_pair structure' do
     msg = nil
     before do
-      msg = InviteSender.send(:email_msg, email)
+      msg = InviteSender.send(:email_token_pair, email)
     end
 
     it 'should hold given email' do
@@ -83,6 +84,7 @@ the US also states each email should have a unique token. lets make sure we can 
       expect(msg[:token].is_a? String).to be true
     end
   end
+end
 ```
 
 and the code
@@ -96,7 +98,7 @@ and the code
 ok, now we know how a email_msg looks like, lets deal with the token uniqueness
 
 ```ruby
-  it 'should have a uniqe token' do
+  it 'each pair should have a uniqe token' do
     emails = (1..100).map { |n| "email_#{n}@domain.com" }
     emails_msgs = emails.map { |e| InviteSender.send(:email_msg, e) }
     tokens = emails_msgs.map { |msg| msg[:token] }
@@ -129,7 +131,7 @@ mmm... how should it behave? whenever we send an email, its counter should incre
     InviteSender::EMAIL_COUNTER.clear
   end
 
-  describe 'attempts_counter' do
+  describe 'EMAIL_COUNTER' do
     email = 'some@email.com'
     it 'should hash email address to an int' do
       expect(InviteSender::EMAIL_COUNTER[email]).to be nil
@@ -155,7 +157,7 @@ and the code
 Awesome! now lets make sure we allow only 3 attempts.
 
 ```ruby
-  describe 'attempts limit' do
+  describe 'send_invite_to' do
     email = 'some@email.com'
     describe 'when less than 3 attempts' do
       it 'should return true' do
@@ -227,10 +229,9 @@ Summery
 
 Tips & notes:
   - the actual code is much shorter than the unit tests.
-  - it took about 1 hour to do it all.
   - reading the tests code really describes the InviteSender behavior. thats great documentation for the next poor fellow that need to use/debug our code.
   - how does our coverage report look like?
-  - what will happen if we delete all unit tests and leave only the last two?
+  - what will happen if we delete all unit tests and leave only the last two? how does the coverage report looks like?
   - what does it mean to have 'well covered' code?
 
 Lets see if it matches a few 'unit tests golden rules':

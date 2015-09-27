@@ -49,13 +49,12 @@ describe 'InviteSender' do
 
   # great. the US also states each email should have a unique token.
   # lets make sure we can to that.
-  describe 'email_msg' do
-    # lets define how a email msg looks like. well, its a pair of email address & a token.
+  describe 'email_token_pair' do
     email = 'some@email.com'
-    describe 'email_msg structure' do
+    describe 'email_token_pair structure' do
       msg = nil
       before do
-        msg = InviteSender.send(:email_msg, email)
+        msg = InviteSender.send(:email_token_pair, email)
       end
 
       it 'should hold given email' do
@@ -67,10 +66,10 @@ describe 'InviteSender' do
       end
     end
 
-    # ok, now we know how a email_msg looks like, lets deal with the token uniqueness
-    it 'should have a uniqe token' do
+    # ok, now we know how a email_token_pair looks like, lets deal with the token uniqueness
+    it 'each pair should have a uniqe token' do
       emails = (1..100).map { |n| "email_#{n}@domain.com" }
-      emails_msgs = emails.map { |e| InviteSender.send(:email_msg, e) }
+      emails_msgs = emails.map { |e| InviteSender.send(:email_token_pair, e) }
       tokens = emails_msgs.map { |msg| msg[:token] }
       uniqe_tokens = tokens.uniq
       expect(uniqe_tokens.size).to eq(emails.size)
@@ -85,7 +84,7 @@ describe 'InviteSender' do
     # but notice! we don't want to count invites from other tests! therefore we need to rest this counter before each test
     # we also need to mock Utils.send_email method.
     # now the block at line 8 make scene, ha!
-    describe 'attempts_counter' do
+    describe 'EMAIL_COUNTER' do
       email = 'some@email.com'
       it 'should hash email address to an int' do
         expect(InviteSender::EMAIL_COUNTER[email]).to be nil

@@ -1,1 +1,1 @@
-each folder has it own readme
+A series of articles on TDD & unit tests. Each folder has it own readme file.

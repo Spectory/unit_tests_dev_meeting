@@ -1,6 +1,6 @@
 module Utils
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-  def self.send_email(email_msg)
+  def self.send_email(email_token_pair)
     # assume this sends the actual email, and return true when done.
     puts 'this should never print while you run your tests'
     return true
@@ -17,7 +17,7 @@ module InviteSender
     EMAIL_COUNTER[email] = 0 unless EMAIL_COUNTER[email]
     EMAIL_COUNTER[email] += 1
     return false if EMAIL_COUNTER[email] > 3
-    Utils.send_email email_msg(email)
+    Utils.send_email email_token_pair(email)
   end
 
   private
@@ -28,7 +28,7 @@ module InviteSender
     return (email =~ Utils::VALID_EMAIL_REGEX) == 0
   end
 
-  def email_msg(email)
+  def email_token_pair(email)
     return { email: email, token: SecureRandom.hex }
   end
 end
