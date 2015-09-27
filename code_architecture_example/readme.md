@@ -2,9 +2,9 @@
 Bad code architecture example:
 -------------------------------
 
-say we want a ng-controller that gets an array of numbers form server, then store it & its accumulative value on scope
+say we want a ng-controller that gets an array of numbers form server, then store it & its accumulative value on scope. For simplicity, lets assume *ajaxService* handles our http actions, and returns a promise obj.
 
-this will do the trick
+This will do the trick
 ```javaScript
 angular.module('app').controller('mainCtl', function ($scope, ajaxService) {
 
