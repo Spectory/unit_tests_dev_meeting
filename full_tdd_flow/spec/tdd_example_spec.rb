@@ -33,14 +33,14 @@ describe 'InviteSender' do
   # its always a good idea to make sure input is valid before even trying any thing else.
   # lets make sure we can do differentiate between bad/good emails
   describe 'valid_email?' do
-    valid_emails = %w(some@email.com some@email.org some@email.co.il)
-    invalid_emails = %w(someemail.com @email.org some@.co.il)
     describe 'when emails are valid' do
+      valid_emails = %w(some@email.com some@email.org some@email.co.il)
       it 'should return true' do
         valid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be true }
       end
     end
     describe 'when emails are invalid' do
+      invalid_emails = %w(someemail.com @email.org some@.co.il)
       it 'should return false' do
         invalid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be false }
       end
