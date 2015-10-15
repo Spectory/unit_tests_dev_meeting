@@ -24,18 +24,19 @@ That will work. Other developers can understand which email formats are valid an
 But notice how in order to fully understand what the valid_email? methods does, we must understand the code inside the *it* blocks. Sometimes that code is not very simple & clear.
 We can help our fellow developers. A nice way to achieve that is by linking the describe & it blocks into an English sentence.
 
- - *describe* block is where we build the test setup / scenario, and add more details.
+ -*describe* block is where we introduce our test unit / subject, and add more details
+ - *context* block is where we build the test setup / scenario.
  - *it* block is the actual test, what we expect to happen.
 
 ```ruby
 describe 'valid_email?' do
-  describe 'when emails are valid' do
+  context 'when emails are valid' do
     valid_emails = %w(some@email.com some@email.org some@email.co.il)
     it 'should return true' do
       valid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be true }
     end
   end
-  describe 'when emails are invalid' do
+  context 'when emails are invalid' do
     invalid_emails = %w(someemail.com @email.org some@.co.il)
     it 'should return false' do
       invalid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be false }
