@@ -24,7 +24,7 @@ That will work. Other developers can understand which email formats are valid an
 But notice how in order to fully understand what the valid_email? methods does, we must understand the code inside the *it* blocks. Sometimes that code is not very simple & clear.
 We can help our fellow developers. A nice way to achieve that is by linking the describe & it blocks into an English sentence.
 
- -*describe* block is where we introduce our test unit / subject, and add more details
+ - *describe* block is where we introduce our test unit / subject, and add more details
  - *context* block is where we build the test setup / scenario.
  - *it* block is the actual test, what we expect to happen.
 
