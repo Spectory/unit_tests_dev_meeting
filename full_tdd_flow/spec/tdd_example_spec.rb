@@ -33,13 +33,13 @@ describe 'InviteSender' do
   # its always a good idea to make sure input is valid before even trying any thing else.
   # lets make sure we can do differentiate between bad/good emails
   describe 'valid_email?' do
-    describe 'when emails are valid' do
+    context 'when emails are valid' do
       valid_emails = %w(some@email.com some@email.org some@email.co.il)
       it 'should return true' do
         valid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be true }
       end
     end
-    describe 'when emails are invalid' do
+    context 'when emails are invalid' do
       invalid_emails = %w(someemail.com @email.org some@.co.il)
       it 'should return false' do
         invalid_emails.each { |e| expect(InviteSender.send(:valid_email?, e)).to be false }
@@ -67,7 +67,7 @@ describe 'InviteSender' do
     end
 
     # ok, now we know how a email_token_pair looks like, lets deal with the token uniqueness
-    it 'each pair should have a uniqe token' do
+    it 'should have a uniqe token' do
       emails = (1..100).map { |n| "email_#{n}@domain.com" }
       emails_msgs = emails.map { |e| InviteSender.send(:email_token_pair, e) }
       tokens = emails_msgs.map { |msg| msg[:token] }
@@ -98,12 +98,12 @@ describe 'InviteSender' do
     # Awesome! now lets make sure we allow only 3 attempts.
     describe 'attempts limit' do
       email = 'some@email.com'
-      describe 'when less than 3 attempts' do
+      context 'when less than 3 attempts' do
         it 'should return true' do
           3.times { expect(InviteSender.send_invite_to email).to be true }
         end
       end
-      describe 'when more than 3 attempts' do
+      context 'when more than 3 attempts' do
         it 'should return false' do
           3.times { expect(InviteSender.send_invite_to email).to be true }
           expect(InviteSender.send_invite_to email).to be false
@@ -113,14 +113,18 @@ describe 'InviteSender' do
   end
 
   # that looks damn AWESOME, now lets make sure it all works together. look how simple it is
-  it 'when email is invalid' do
+  context 'when email is invalid' do
     ivalid_email = 'aaaa'
-    expect(InviteSender.send_invite_to ivalid_email).to be false
+    it 'should return false' do
+      expect(InviteSender.send_invite_to ivalid_email).to be false
+    end
   end
 
-  it 'when email is valid' do
+  context 'when email is valid' do
     email = 'some@email.com'
-    3.times { expect(InviteSender.send_invite_to email).to be true }
-    3.times { expect(InviteSender.send_invite_to email).to be false }
+    it 'should return false' do
+      3.times { expect(InviteSender.send_invite_to email).to be true }
+      3.times { expect(InviteSender.send_invite_to email).to be false }
+    end
   end
 end
