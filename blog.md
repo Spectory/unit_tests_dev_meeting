@@ -80,7 +80,7 @@ describe 'email_token_pair' do
   describe 'email_token_pair structure' do
     msg = nil
     before do
-      msg = InviteSender.send(:email_token_pair, email)
+      msg = InviteSender.email_msg(email)
     end
 
     it 'should hold given email' do
