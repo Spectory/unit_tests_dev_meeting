@@ -95,22 +95,22 @@ and the code
   end
 ```
 
-ok, now we know how a email_msg looks like, lets deal with the token uniqueness
+ok, now we know how a email_token_pair looks like, lets deal with the token uniqueness
 
 ```ruby
   it 'should have a uniqe token' do
     emails = (1..100).map { |n| "email_#{n}@domain.com" }
-    emails_msgs = emails.map { |e| InviteSender.send(:email_msg, e) }
+    emails_msgs = emails.map { |e| InviteSender.send(:email_token_pair, e) }
     tokens = emails_msgs.map { |msg| msg[:token] }
     uniqe_tokens = tokens.uniq
     expect(uniqe_tokens.size).to eq(emails.size)
   end
 ```
 
-well this is pretty easy to do, just modify email_msg method
+well this is pretty easy to do, just modify email_token_pair method
 
 ```ruby
-  def email_msg(email)
+  def email_token_pair(email)
     return { email: email, token: SecureRandom.hex }
   end
 ```
