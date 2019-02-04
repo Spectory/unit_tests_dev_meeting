@@ -90,7 +90,7 @@ end
 and the code
 
 ```ruby
-  def email_msg(email)
+  def email_token_pair(email)
     return { email: email, token: '' }
   end
 ```
@@ -181,7 +181,7 @@ and modify the code
     EMAIL_COUNTER[email] = 0 unless EMAIL_COUNTER[email]
     EMAIL_COUNTER[email] += 1
     return false if EMAIL_COUNTER[email] > 3
-    Utils.send_email email_msg(email)
+    Utils.send_email email_token_pair(email)
   end
 ```
 
